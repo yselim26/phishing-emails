@@ -1,0 +1,7 @@
+training_dataset,test_dataset,average_precision,auroc
+Phishing_Email,CEAS_08,0.9240,0.9444
+CEAS_08,Phishing_Email,0.7642,0.8086
+IBM,CEAS_08,0.9169,0.9332
+IBM,Phishing_Email,0.8883,0.9171
+CEAS_08,IBM,0.9038,0.8870
+Phishing_Email,IBM,0.9974,0.9975

@@ -1,0 +1,11 @@
+# Original and prepared datasets
+CEAS_08.csv
+Phishing_Email.csv
+prepared_data.csv
+train-00000-of-00001.csv
+test-00000-of-00001.csv
+
+# Python-generated files
+__pycache__/
+*.pyc
+.DS_Store
