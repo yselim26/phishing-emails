@@ -1,0 +1,7 @@
+Operating system: macOS 27.2
+Architecture: ARM64
+Python: 3.14.3
+scikit-learn: 1.9.1
+pandas: 3.0.5
+NumPy: 2.4.6
+SciPy: 1.18.1
