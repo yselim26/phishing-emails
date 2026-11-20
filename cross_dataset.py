@@ -18,6 +18,7 @@ datasets = ["Phishing_Email", "CEAS_08", "IBM"]
 
 all_scores = []
 summary = []
+feature_rows = []
 
 for source in datasets:
 
@@ -46,6 +47,31 @@ for source in datasets:
     model.fit(train["text"].astype(str), train["label"])
     training_time = time.time() - start_time
 
+    # Extract logistic regression feature importance
+    vectorizer = model.named_steps["tfidf"]
+    classifier = model.named_steps["classifier"]
+
+    feature_names = vectorizer.get_feature_names_out()
+    coefficients = classifier.coef_[0]
+
+    top_positive = coefficients.argsort()[-20:][::-1]
+    top_negative = coefficients.argsort()[:20]
+
+    for index in top_positive:
+        feature_rows.append({
+            "training_dataset": source,
+            "feature": feature_names[index],
+            "coefficient": coefficients[index],
+            "direction": "phishing"
+        })
+
+    for index in top_negative:
+        feature_rows.append({
+            "training_dataset": source,
+            "feature": feature_names[index],
+            "coefficient": coefficients[index],
+            "direction": "legitimate"
+        })
     # Choose threshold using source validation data only
     validation_scores = model.predict_proba(
         validation["text"].astype(str)
@@ -130,3 +156,7 @@ print("\nSaved cross_dataset_scores.csv")
 print("Saved cross_dataset_summary.csv")
 print("\nFinal comparison table:")
 print(summary_df.to_string(index=False))
+features_df = pd.DataFrame(feature_rows)
+features_df.to_csv("feature_importance.csv", index=False)
+
+print("\nSaved feature_importance.csv")
